@@ -2,6 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
+    "selecteID":12,
     "props":{"width":750,"sceneColor":"#000000","height":1634},
     "nodeParent":-1,
     "label":"View",
@@ -51,17 +52,29 @@
                 },
                 {
                     "x":30,
-                    "type":"Image",
-                    "props":{"y":800,"x":70,"width":0,"var":"bar","skin":"images/loadBox/b1.png"},
+                    "type":"Sprite",
+                    "props":{"y":800,"x":70,"width":609,"var":"barBox","height":26},
                     "nodeParent":11,
-                    "label":"Image(bar)",
-                    "isDirectory":false,
+                    "label":"Sprite(barBox)",
+                    "isOpen":false,
+                    "isDirectory":true,
                     "isAniNode":true,
-                    "hasChild":false,
-                    "compId":4,
+                    "hasChild":true,
+                    "compId":12,
                     "child":[
-                        ],
-                    "$HIDDEN":false
+                        {
+                            "type":"Image",
+                            "props":{"y":0,"x":0,"width":0,"var":"bar","skin":"images/loadBox/b1.png"},
+                            "nodeParent":12,
+                            "label":"Image(bar)",
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":4,
+                            "child":[
+                                ],
+                            "$HIDDEN":false
+                        }]
                 },
                 {
                     "x":30,

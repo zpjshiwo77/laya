@@ -24,7 +24,8 @@ var iceGame = function () {
         { url: 'res/atlas/images/indexBox.atlas', type: Loader.ATLAS }
     ];
 
-    var LoadComplete = null, ShowRankBox = null, GameEnd = null;
+    var LoadComplete = null, ShowRankBox = null, ShowGameBox = null, GameEnd = null;
+    var loadAflag = false, loadBflag = false;
 
     var loadBoxUi, indexBoxUi, gameBoxUi, endDialogUi;
     var GamePageY = 0;
@@ -37,11 +38,12 @@ var iceGame = function () {
     var score = 0;
 
 
-    _self.init = function (load, show, end) {
+    _self.init = function (opts) {
         _layaInit();
-        LoadComplete = load;
-        ShowRankBox = show;
-        GameEnd = end;
+        LoadComplete = opts.load;
+        ShowRankBox = opts.showRank;
+        ShowGameBox = opts.showGame;
+        GameEnd = opts.end;
     }
 
     /**
@@ -95,6 +97,28 @@ var iceGame = function () {
     }
 
     /**
+     * 模拟加载进度
+     */
+    function _load_timer(per) {
+        per = per || 0;
+        per += imath.randomRange(1, 3);
+        per = per > 99 ? 99 : per;
+        _self.setLoadBar(per);
+        if (per == 99) {
+            loadBflag = true;
+            if (loadAflag && loadBflag && LoadComplete) {
+                _self.setLoadBar(100);
+                LoadComplete();
+            }
+        }
+        else {
+            setTimeout(function () {
+                _load_timer(per);
+            }, 33);
+        }
+    }//edn func
+
+    /**
      * 游戏开始
      */
     function _gameStart() {
@@ -113,6 +137,7 @@ var iceGame = function () {
         endDialogUi.scoreD.text = score;
         endDialogUi.score.text = score;
         endDialogUi.popup();
+        if (GameEnd) GameEnd(score);
     }
 
     /**
@@ -136,14 +161,14 @@ var iceGame = function () {
     function _rotateArrow(dir) {
         if ((arrow.speed == 1 || arrow.speed == -1 || arrow.speed == 0) && eventFlag) {
             if (dir == "left") {
-                arrow.speed = -3;
+                arrow.speed = 3;
                 gameBoxUi.arL.alpha = 1;
                 setTimeout(function () {
                     gameBoxUi.arL.alpha = 0.5;
                 }, 300);
             }
             else {
-                arrow.speed = 3;
+                arrow.speed = -3;
                 gameBoxUi.arR.alpha = 1;
                 setTimeout(function () {
                     gameBoxUi.arR.alpha = 0.5;
@@ -194,6 +219,7 @@ var iceGame = function () {
         indexBoxUi.ice.clear();
         gameBoxUi.ice.play();
         _gameStart();
+        if (ShowGameBox) ShowGameBox();
     }
 
     /**
@@ -201,7 +227,7 @@ var iceGame = function () {
      */
     function _HorizontalSpeedBall() {
         var Force = ball.Xforce;
-        ball.Xspeed = imath.FloatPointAdd(ball.Xspeed, imath.Acceleration(Force, 0.0167));
+        ball.Xspeed = gamemath.FloatPointAdd(ball.Xspeed, gamemath.Acceleration(Force, 0.0167));
         ball.ui.x += ball.Xspeed
         ball.Xforce = 0;
     }//end func
@@ -210,8 +236,8 @@ var iceGame = function () {
      * 垂直速度计算
      */
     function _VerticalSpeedBall() {
-        var Force = imath.FloatPointAdd(ball.Yforce, imath.gravity);
-        ball.Yspeed = imath.FloatPointAdd(ball.Yspeed, imath.Acceleration(Force, 0.0167));
+        var Force = gamemath.FloatPointAdd(ball.Yforce, gamemath.gravity);
+        ball.Yspeed = gamemath.FloatPointAdd(ball.Yspeed, gamemath.Acceleration(Force, 0.0167));
         ball.ui.y += ball.Yspeed
         ball.Yforce = 0;
     }//end func
@@ -253,7 +279,7 @@ var iceGame = function () {
      * @param {*}  
      */
     function _ballThingHitTest(thing, extForce) {
-        var res = imath.ballHitTest(thing.ui, ball.ui);
+        var res = gamemath.ballHitTest(thing.ui, ball.ui);
         if (res.hit) {
             AnimionTimer = false;
             _CountForce(thing, res, extForce);
@@ -324,7 +350,7 @@ var iceGame = function () {
         };
 
         if (arrow.speed > 2 || arrow.speed < -2) {
-            var deg = imath.convertAngle(arrow.ui.rotation);
+            var deg = gamemath.convertAngle(arrow.ui.rotation);
             var iforce = arrow.speed * 3000 * (ball.ui.x - arrow.ui.x) / (arrow.ui.width / 2);	//力
 
             if (res.surface == 0) {
@@ -357,11 +383,11 @@ var iceGame = function () {
 
         var rotateDir = ele.ui.rotation > 0 ? 1 : -1;											//旋转方向
         var rotation = Math.abs(ele.ui.rotation); 												//不带方向的旋转角度
-        var deg = imath.convertAngle(rotation);													//不带方向的旋转弧度
+        var deg = gamemath.convertAngle(rotation);													//不带方向的旋转弧度
         var sinDeg = Math.sin(deg);																//正弦
         var cosDeg = Math.cos(deg);																//余弦
         var XdirF = ball.Xspeed * ball.quality * ele.elasticity / 0.0167;						//X方向所产生的反作用力
-        var YdirF = ball.Yspeed * ball.quality * ele.elasticity / 0.0167 - imath.gravity;		//Y方向所产生的反作用力
+        var YdirF = ball.Yspeed * ball.quality * ele.elasticity / 0.0167 - gamemath.gravity;		//Y方向所产生的反作用力
         var XdpsF = {																			//X方向的实际反作用力（坐标系为物体旋转后的坐标系）
             force: 0,																			//力
             xdir: 0,																			//x方向
@@ -406,8 +432,8 @@ var iceGame = function () {
             YdpsF.ydir = -1 * sinDeg;
         }
 
-        force.Xforce = imath.FloatPointAdd(XdpsF.xdir * XdpsF.force, YdpsF.xdir * YdpsF.force);
-        force.Yforce = imath.FloatPointAdd(XdpsF.ydir * XdpsF.force, YdpsF.ydir * YdpsF.force);
+        force.Xforce = gamemath.FloatPointAdd(XdpsF.xdir * XdpsF.force, YdpsF.xdir * YdpsF.force);
+        force.Yforce = gamemath.FloatPointAdd(XdpsF.ydir * XdpsF.force, YdpsF.ydir * YdpsF.force);
 
         return force;
     }//end func
@@ -428,6 +454,7 @@ var iceGame = function () {
         _UIScreenAuto(loadBoxUi);
         loadBoxUi.loadW.play();
         loadBoxUi.ice.play();
+        _load_timer(0);
         Laya.loader.load(Resources, laya.utils.Handler.create(this, _loadComplete), null);
     }
 
@@ -435,12 +462,15 @@ var iceGame = function () {
      * 加载完成
      */
     function _loadComplete() {
-        if (LoadComplete) LoadComplete();
         _indexUiInit();
         _gameUiInit();
         _endUiInit();
         _eventInit();
-        _self.showIndexBox();
+        loadAflag = true;
+        if (loadAflag && loadBflag && LoadComplete) {
+            _self.setLoadBar(100);
+            LoadComplete();
+        }
     }
 
     /**
@@ -587,6 +617,3 @@ var iceGame = function () {
     }
 
 }
-
-var iGame = new iceGame();
-iGame.init();
