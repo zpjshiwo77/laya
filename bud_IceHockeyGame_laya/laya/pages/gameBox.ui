@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":277,
-    "selecteID":251,
+    "selectedBox":3,
+    "selecteID":5,
     "props":{"width":750,"visible":false,"sceneColor":"#000000","height":1634,"alpha":0},
     "nodeParent":-1,
     "label":"View",
@@ -94,7 +94,7 @@
                     "props":{"y":0,"x":0,"width":750,"var":"blocks","height":990},
                     "nodeParent":3,
                     "label":"Box(blocks)",
-                    "isOpen":true,
+                    "isOpen":false,
                     "isDirectory":true,
                     "isAniNode":true,
                     "hasChild":true,
@@ -1254,7 +1254,7 @@
                 {
                     "x":30,
                     "type":"Image",
-                    "props":{"y":860,"x":720,"width":69,"var":"arR","skin":"images/gameBox/arR.png","pivotX":69,"height":59,"alpha":0.5},
+                    "props":{"y":830,"x":720,"width":109,"var":"arR","skin":"images/gameBox/arR.png","pivotX":109,"height":93,"alpha":0.5},
                     "nodeParent":3,
                     "label":"Image(arR)",
                     "isDirectory":false,
@@ -1267,7 +1267,7 @@
                 {
                     "x":30,
                     "type":"Image",
-                    "props":{"y":860,"x":30,"var":"arL","skin":"images/gameBox/arL.png","alpha":0.5},
+                    "props":{"y":830,"x":30,"width":109,"var":"arL","skin":"images/gameBox/arL.png","height":93,"alpha":0.5},
                     "nodeParent":3,
                     "label":"Image(arL)",
                     "isDirectory":false,
