@@ -104,3 +104,23 @@ var loadBoxUI=(function(_super){
 		loadBoxUI.uiView={"type":"View","props":{"width":750,"height":1634},"child":[{"type":"Image","props":{"y":33,"x":240,"skin":"images/public/logo.png","name":"logo"}},{"type":"Box","props":{"y":200,"x":0,"width":750,"var":"cont","height":930},"child":[{"type":"Image","props":{"y":652,"x":54,"var":"pos","skin":"images/loadBox/b.png"}},{"type":"Sprite","props":{"y":800,"x":70,"width":609,"var":"barBox","height":26},"child":[{"type":"Image","props":{"y":0,"x":0,"width":0,"var":"bar","skin":"images/loadBox/b1.png"}}]},{"type":"Image","props":{"y":800,"x":70,"var":"light","skin":"images/loadBox/b2.png"}},{"type":"Image","props":{"y":0,"x":0,"var":"t1","skin":"images/loadBox/t3.png","alpha":0},"compId":8},{"type":"Image","props":{"var":"t2","skin":"images/loadBox/t2.png"}},{"type":"Image","props":{"y":0,"x":0,"var":"t3","skin":"images/loadBox/t1.png","alpha":0},"compId":6},{"type":"Image","props":{"y":840,"x":275,"skin":"images/loadBox/w.png","name":"word"},"compId":9}]}],"animations":[{"nodes":[{"target":9,"keyframes":{"alpha":[{"value":0.3,"tweenMethod":"linearNone","tween":true,"target":9,"key":"alpha","index":0},{"value":1,"tweenMethod":"linearNone","tween":true,"target":9,"key":"alpha","index":10},{"value":0.3,"tweenMethod":"linearNone","tween":true,"target":9,"key":"alpha","index":20}]}}],"name":"loadW","id":1,"frameRate":24,"action":0},{"nodes":[{"target":8,"keyframes":{"alpha":[{"value":0,"tweenMethod":"linearNone","tween":true,"target":8,"key":"alpha","index":0},{"value":1,"tweenMethod":"linearNone","tween":true,"target":8,"key":"alpha","index":20},{"value":0,"tweenMethod":"linearNone","tween":true,"target":8,"key":"alpha","index":40}]}},{"target":6,"keyframes":{"alpha":[{"value":0,"tweenMethod":"linearNone","tween":true,"target":6,"key":"alpha","index":0},{"value":1,"tweenMethod":"linearNone","tween":true,"target":6,"key":"alpha","index":20},{"value":0,"tweenMethod":"linearNone","tween":true,"target":6,"key":"alpha","index":40}]}}],"name":"ice","id":2,"frameRate":24,"action":0}]};
 		return loadBoxUI;
 	})(View);
+var ruleDialogUI=(function(_super){
+		function ruleDialogUI(){
+			
+		    this.closeBtn=null;
+
+			ruleDialogUI.__super.call(this);
+		}
+
+		CLASS$(ruleDialogUI,'ui.ruleDialogUI',_super);
+		var __proto__=ruleDialogUI.prototype;
+		__proto__.createChildren=function(){
+		    
+			laya.ui.Component.prototype.createChildren.call(this);
+			this.createView(ruleDialogUI.uiView);
+
+		}
+
+		ruleDialogUI.uiView={"type":"Dialog","props":{"width":673,"height":1074},"child":[{"type":"Image","props":{"skin":"images/gameBox/rule.png"}},{"type":"Sprite","props":{"y":849,"x":118,"width":445,"var":"closeBtn","height":139}}]};
+		return ruleDialogUI;
+	})(Dialog);

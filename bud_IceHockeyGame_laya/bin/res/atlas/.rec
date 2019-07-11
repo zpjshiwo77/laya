@@ -2,6 +2,7 @@ D .
 D images
 D images/endDialog
 R EFC3A78F bg.png
+R D673C3F7 bg2.png
 D images/gameBox
 P EF7A6236 arL.png
 P 7AC73C04 arR.png
@@ -11,6 +12,7 @@ P 4ECCFC2A beer.png
 P 1DDE23BA c.png
 P 70FEC9C8 k.png
 R DE3DC38B q.png
+R 17C1F38C rule.png
 D images/indexBox
 P 19E83069 b1.png
 P FE920903 b2.png

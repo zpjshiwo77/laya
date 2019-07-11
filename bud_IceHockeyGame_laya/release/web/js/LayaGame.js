@@ -27,7 +27,7 @@ var iceGame = function () {
     var LoadComplete = null, ShowRankBox = null, ShowGameBox = null, GameEnd = null;
     var loadAflag = false, loadBflag = false;
 
-    var loadBoxUi, indexBoxUi, gameBoxUi, endDialogUi;
+    var loadBoxUi, indexBoxUi, gameBoxUi, endDialogUi, ruleDialogUi;
     var GamePageY = 0;
 
     var ball = {}, arrow = {};
@@ -94,6 +94,8 @@ var iceGame = function () {
 
         endDialogUi.againBtn.on(Laya.Event.CLICK, this, _resetGame);
         endDialogUi.rankBtn.on(Laya.Event.CLICK, this, _showRankBox);
+
+        ruleDialogUi.closeBtn.on(Laya.Event.CLICK, this, _closeRuleDialog);
     }
 
     /**
@@ -151,6 +153,14 @@ var iceGame = function () {
         ball.Yspeed = 0;
         endDialogUi.close();
         _squaresUIInit();
+        _gameStart();
+    }
+
+    /**
+     * 关闭规则页面
+     */
+    function _closeRuleDialog(){
+        ruleDialogUi.close();
         _gameStart();
     }
 
@@ -218,7 +228,7 @@ var iceGame = function () {
         _UItransition(indexBoxUi, gameBoxUi);
         indexBoxUi.ice.clear();
         gameBoxUi.ice.play();
-        _gameStart();
+        ruleDialogUi.popup();
         if (ShowGameBox) ShowGameBox();
     }
 
@@ -455,6 +465,9 @@ var iceGame = function () {
         loadBoxUi.loadW.play();
         loadBoxUi.ice.play();
         _load_timer(0);
+        var mask = new Laya.Sprite();
+        mask.graphics.drawRect(5,0,609,26,"#000000");
+        loadBoxUi.barBox.mask = mask;
         Laya.loader.load(Resources, laya.utils.Handler.create(this, _loadComplete), null);
     }
 
@@ -465,6 +478,7 @@ var iceGame = function () {
         _indexUiInit();
         _gameUiInit();
         _endUiInit();
+        _ruleUiInit();
         _eventInit();
         loadAflag = true;
         if (loadAflag && loadBflag && LoadComplete) {
@@ -586,6 +600,13 @@ var iceGame = function () {
      */
     function _endUiInit() {
         endDialogUi = new endDialogUI();
+    }
+
+    /**
+     * 规则页面UI初始化
+     */
+    function _ruleUiInit() {
+        ruleDialogUi = new ruleDialogUI();
     }
 
     /**
