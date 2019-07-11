@@ -5,6 +5,7 @@ var Dialog=laya.ui.Dialog;
 var endDialogUI=(function(_super){
 		function endDialogUI(){
 			
+		    this.tips=null;
 		    this.rankBtn=null;
 		    this.againBtn=null;
 		    this.scoreD=null;
@@ -23,7 +24,7 @@ var endDialogUI=(function(_super){
 
 		}
 
-		endDialogUI.uiView={"type":"Dialog","props":{"width":673,"height":1076},"child":[{"type":"Image","props":{"y":0,"x":3,"skin":"images/endDialog/bg.png"}},{"type":"Sprite","props":{"y":887,"x":131,"width":425,"var":"rankBtn","height":120}},{"type":"Sprite","props":{"y":724,"x":132,"width":423,"var":"againBtn","height":122}},{"type":"Text","props":{"y":580,"x":-5,"width":673,"var":"scoreD","text":"0","strokeColor":"#ff0000","stroke":2,"skewX":-6,"height":120,"fontSize":120,"font":"Microsoft YaHei","color":"#000000","bold":true,"align":"center"}},{"type":"Text","props":{"y":583,"x":0,"width":673,"var":"score","text":"0","skewX":-6,"height":120,"fontSize":120,"font":"Microsoft YaHei","color":"#ff0000","bold":true,"align":"center"}}]};
+		endDialogUI.uiView={"type":"Dialog","props":{"width":673,"height":1076},"child":[{"type":"Image","props":{"y":0,"x":3,"var":"tips","skin":"images/endDialog/bg.png"}},{"type":"Sprite","props":{"y":887,"x":131,"width":425,"var":"rankBtn","height":120}},{"type":"Sprite","props":{"y":724,"x":132,"width":423,"var":"againBtn","height":122}},{"type":"Text","props":{"y":580,"x":-5,"width":673,"var":"scoreD","text":"0","strokeColor":"#ff0000","stroke":2,"skewX":-6,"height":120,"fontSize":120,"font":"Microsoft YaHei","color":"#000000","bold":true,"align":"center"}},{"type":"Text","props":{"y":583,"x":0,"width":673,"var":"score","text":"0","skewX":-6,"height":120,"fontSize":120,"font":"Microsoft YaHei","color":"#ff0000","bold":true,"align":"center"}}]};
 		return endDialogUI;
 	})(Dialog);
 var gameBoxUI=(function(_super){
